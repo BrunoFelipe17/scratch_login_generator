@@ -6,18 +6,25 @@ defmodule ScratchLoginGenerator do
   """
 
   @doc """
-  Hello world.
+  Given a csv file with the students name, saves in a file the students login
 
   ## Examples
-
-      iex> ScratchLoginGenerator.hello()
-      :world
+      # With a file with a student "Lorem Ipsum Dolor", returns "ldolor123" and a random password
+      iex> ScratchLoginGenerator.build(filename)
+      {:ok, "Logins created successfully"}
 
   """
 
   def build(filename) do
     login_list = create_students_login(filename)
-    File.write("reports/logins.csv", login_list)
+    generate_csv(filename, login_list)
+  end
+
+  def build_from_many(filenames) do
+    filenames
+      |> Task.async_stream(&build/1)
+      |> Enum.map(& &1)
+
   end
 
   defp create_students_login(filename) do
@@ -36,6 +43,11 @@ defmodule ScratchLoginGenerator do
 
     last_name = Student.get_last_name(tail)
 
-    Login.generate(first_letter, last_name)
+    Login.generate(line, first_letter, last_name)
+  end
+
+  defp generate_csv(filename, content) do
+    File.write("#{filename}_logins.csv", content)
+    {:ok, "Logins created successfully"}
   end
 end

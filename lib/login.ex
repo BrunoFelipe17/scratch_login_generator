@@ -14,8 +14,8 @@ defmodule ScratchLoginGenerator.Login do
     "fox"
   ]
 
-  def generate(first_letter, last_name) do
-    login_generator(first_letter, last_name) <> "," <> password_generator() <> "\n"
+  def generate(full_name, first_letter, last_name) do
+    "#{full_name},#{login_generator(first_letter, last_name)},#{password_generator()}\n"
   end
 
   defp login_generator(first_letter, last_name) do

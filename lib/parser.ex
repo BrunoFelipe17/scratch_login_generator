@@ -1,6 +1,6 @@
 defmodule ScratchLoginGenerator.Parser do
   def parse_file(filename) do
-    "reports/#{filename}.csv"
+    "students/#{filename}.csv"
     |> File.stream!()
     |> Stream.map(fn line -> parse_line(line) end)
   end

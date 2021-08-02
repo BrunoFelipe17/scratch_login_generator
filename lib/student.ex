@@ -10,4 +10,6 @@ defmodule ScratchLoginGenerator.Student do
   def get_last_name([_head | tail]) do
     get_last_name(tail)
   end
+
+  def full_name(full_name), do: full_name
 end
