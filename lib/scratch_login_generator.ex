@@ -30,12 +30,12 @@ defmodule ScratchLoginGenerator do
   defp create_students_login(filename) do
     filename
     |> Parser.parse_file()
-    |> Enum.map(fn line -> create_login(line) end)
+    |> Enum.map(fn full_name -> create_login(full_name) end)
   end
 
-  defp create_login(line) do
+  defp create_login(full_name) do
     [head | tail] =
-      line
+      full_name
       |> String.downcase()
       |> String.split(" ")
 
@@ -43,7 +43,7 @@ defmodule ScratchLoginGenerator do
 
     last_name = Student.get_last_name(tail)
 
-    Login.generate(line, first_letter, last_name)
+    Login.generate(first_letter, last_name)
   end
 
   defp generate_csv(filename, content) do
